@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { supabase } from '../utils/supabaseClient'
 import { Auth } from '@supabase/ui'
-import Home from "./Home";
 import Link from 'next/link'
 
 export default function IndexPage() {
