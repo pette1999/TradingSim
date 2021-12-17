@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  .sbui-input {
+    @apply custom-focus rounded-full focus: shadow-none !important;
+  }
+
+  .sbui-checkbox {
+    @apply custom-focus rounded-full focus: shadow-none !important;
+  }
+
+  .sbui-btn-primary {
+    @apply custom-focus button-inverse rounded-full !important;
+  }
+
+  .sbui-typography-link {
+    @apply custom-focus text-green-400 font-bold rounded-full !important;
+  }
+}

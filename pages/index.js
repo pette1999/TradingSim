@@ -1,95 +1,87 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 import { supabase } from '../utils/supabaseClient'
 import { Auth } from '@supabase/ui'
-import Header from "../components/Header";
+import Home from "../components/Home"
+import Login from "../components/Login"
+import { useAuth } from "../utils/auth"
+import stocks from '../pages/stocks'
+import { Switch, Route, Link} from 'react-router-dom'
+import { Router } from "@reach/router"
 
 
 export default function IndexPage() {
   const { user } = Auth.useUser()
-  const [isDesktop, setDesktop] = useState(false)
-  const [isLogin, setLogin] = useState(false)
+  // const { user, view, signOut } = useAuth();
+  const [users, setUser] = useState ([])
+  const [stocks, setStocks] = useState([])
+  const [funds, setFunds] = useState([])
 
   useEffect(() => {
-    if (window.innerWidth > 800) {
-      setDesktop(true);
-    } else {
-      setDesktop(false);
-    }
-
-    if(user) {
-      setLogin(true)
-    } else {
-      setLogin(false)
-    }
-
-    const updateMedia = () => {
-      if (window.innerWidth > 800) {
-        setDesktop(true);
-      } else {
-        setDesktop(false);
-      }
-    };
-    window.addEventListener('resize', updateMedia);
-    return () => window.removeEventListener('resize', updateMedia);
+    fetchUser()
+    fetchStock()
+    fetchFund()
   }, []);
 
-  return (
-    <div>
-      {
-        user ? (
-         <div className="min-h-screen max-h-full min-w-screen">
-            {console.log(user.email)}
-            <Header />
-            {
-              isDesktop && (
-                <span>
-                  <div className="flex flex-row justify-between min-w-fit">
-                    <span className="text-black font-black flex items-center">
-                      <h1>Hello, <span className='text-pink-300'>{user.email}</span> <br></br>Welcome to Trading Simulation!</h1>
-                    </span>
-                    <img src='https://wallpaper.dog/large/5574447.jpg' className=" object-cover w-3/5"/>
-                  </div>
-                  <button
-                    className="text-pink-300 font-semibold"
-                    onClick={async () => {
-                      const { error } = await supabase.auth.signOut()
-                      if (error) console.log('Error logging out:', error.message)
-                      setLogin(false)
-                    }}
-                  >
-                    Logout
-                  </button>
-                </span>
-              )
-            }
-          </div>
-        ) : (
-          <div className="min-h-screen max-h-full min-w-screen">
-            {user & (
-              <Header/>
-            )}
-            <div className="flex flex-row justify-center">
-              {console.log("hello")}
-              { 
-                isDesktop && (
-                  <img src='https://wallpaper.dog/large/5574447.jpg' className=" object-cover md:w-1/2 xl:w-3/5"/>
-                )
-              }
-              <div className="container mx-auto max-w-2xl justify-center items-center flex flex-col p-6 md:w-1/3 xl:w-2/5">
-                <div className="container mx-auto justify-start flex flex-col">
-                  <h1 className="text-black text-2xl font-black">Welcome to Trading Simulation</h1>
-                  {/* This is the Login UI Component from SupabaseUI */}
-                  <Auth
-                    supabaseClient={supabase}
-                    socialLayout="horizontal"
-                    socialButtonSize="xlarge"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        )
+  const fetchUser = async () => {
+    let { data: users, error } = await supabase
+    .from('user')
+    .select('UserName,Password,PortfolioID,Email')
+
+    if(!error) {
+      setUser(users)
+      for (let i = 0; i < users.length; i++) {
+        console.log(users[i].Email)
       }
-    </div>
+    } else {
+      // there is an error
+      console.log(error)
+    }
+  }
+
+  const fetchStock = async () => {
+    var stockList = []
+    let { data: stocks, error } = await supabase
+    .from('stock')
+    .select('Ticker')
+
+    if(!error) {
+      setStocks(stocks)
+      for (let i = 0; i < stocks.length; i++) {
+        stockList.push(stocks[i].Ticker)
+      }
+    } else {
+      // there is an error
+      console.log(error)
+    }
+
+    console.log(stockList)
+  }
+
+  const fetchFund = async () => {
+    let { data: funds, error } = await supabase
+    .from('fund')
+    .select('FundName')
+
+    if(!error) {
+      setFunds(funds)
+      for (let i = 0; i < funds.length; i++) {
+        console.log(funds[i].FundName)
+      }
+    } else {
+      // there is an error
+      console.log(error)
+    }
+  }
+
+  return (
+      <div>
+          {
+            user ? (
+              <Home user={user} supabase={supabase} users={users} stocks={stocks} funds={funds} path="/"/>
+            ) : (
+              <Login supabase={supabase} Auth={Auth} user={user} path="/"/>
+            )
+          }
+      </div>
   )
 }
