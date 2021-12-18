@@ -128,7 +128,6 @@ export default function account() {
                 <div className='p-10'>
                   <div className="flex flex-row justify-between">
                     <h1 className='text-xl pb-2.5 font-medium'>Fund Portfolio</h1>
-                    <Button variant="outlined" size="small">Show Portfolio</Button>
                   </div>
                   <TableData fundPortfolioInfo={userPortfolioInfo} setFundPortfolioInfo={setUserPortfolioInfo}/>
                 </div>

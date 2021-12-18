@@ -132,11 +132,11 @@ export default function Home({ user, supabase, users, stocks, funds}) {
             <a href="/account" className="flex hover:font-bold">Account</a>
           </div>
         </div>
-        <Ticker>
+        {/* <Ticker>
           {({ index }) => (
             <h1>This is the Headline of element #{index}!</h1>
           )}
-        </Ticker>
+        </Ticker> */}
       </div>
       {
         isDesktop && (

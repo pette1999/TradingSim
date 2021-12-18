@@ -22,7 +22,7 @@ export default function stocks({}) {
   const [fundInfo, setFundInfo] = useState([])
   const [term, setTerm] = useState("")
   const [fundPortfolioInfo, setFundPortfolioInfo] = useState([])
-  const [shwoFundPortfolio, setShowFundPortfolio] = useState(false)
+  const [showFundPortfolio, setShowFundPortfolio] = useState(false)
   const [userPortfolioInfo, setUserPortfolioInfo] = useState([])
   const [showBuy, setShowBuy] = useState(false)
   const commonStyles = {
@@ -163,6 +163,7 @@ export default function stocks({}) {
     setShowBuy(true)
     stockInfo[0] != null && console.log(stockInfo[0].Ticker)
     userInfo[0] != null && fetchUserPortfolioInfo(userInfo[0].PortfolioID)
+    fundInfo[0] != null && console.log(fundInfo[0].FundTicker)
   }
 
   const handleStockClickBUY = () => {
@@ -183,6 +184,27 @@ export default function stocks({}) {
     } else {
       // ticker does NOT exist
       insertPortfolio(userInfo[0].PortfolioID,stockInfo[0].Ticker,stockInfo[0].Company_Name,stockInfo[0].Price,true)
+      console.log("New ticker added to the portfolio!")
+    }
+  }
+
+  const handleFundClickBUY = () => {
+    var t;
+    userPortfolioInfo.map(g => {
+      if(g.Ticker.toString().toLowerCase() == fundInfo[0].FundTicker.toString().toLowerCase()) {
+        temp_fund += 1
+        t=g;
+        console.log("t: ")
+        console.log(t)
+      }
+    })
+    if(temp_fund > 0) {
+      // The ticker exists
+      updatePortfolio(userInfo[0].PortfolioID,t.Ticker,t.Quantity,1)
+      console.log("One more share purchased!")
+    } else {
+      // ticker does NOT exist
+      insertPortfolio(userInfo[0].PortfolioID,fundInfo[0].FundTicker,fundInfo[0].FundName,fundInfo[0].fund_price,true)
       console.log("New ticker added to the portfolio!")
     }
   }
@@ -214,7 +236,30 @@ export default function stocks({}) {
     }
   }
 
-  const handleFundClick = () => {
+  const handleFundClickSELL = () => {
+    var t;
+    userPortfolioInfo.map(g => {
+      if(g.Ticker.toString().toLowerCase() == fundInfo[0].FundTicker.toString().toLowerCase()) {
+        temp_fund += 1
+        t=g;
+        console.log("t: ")
+        console.log(t)
+      }
+    })
+    if(temp_fund > 0) {
+      // The ticker exists
+      // if the share count is 1
+      if(t.Quantity > 1) {
+        // if the share count is > 1
+        updatePortfolio(userInfo[0].PortfolioID,t.Ticker,t.Quantity,-1)
+      } else {
+        // if the share count is 1, then we need to delete the row
+        deletePortfolio(userInfo[0].PortfolioID, fundInfo[0].FundTicker)
+      }
+    } else {
+      // ticker does NOT exist
+      alert("ERROR! You don't have this ticker in your portfolio!")
+    }
   }
 
   const handleFundPortfolio = () => {
@@ -263,8 +308,8 @@ export default function stocks({}) {
                     {
                       showBuy ? (
                         <Stack direction="row" spacing={1}>
-                          <Button variant="outlined" color="success" onClick={handleFundClick}>Buy</Button>
-                          <Button variant="outlined" color="error">Sell</Button>
+                          <Button variant="outlined" color="success" onClick={handleFundClickBUY}>Buy</Button>
+                          <Button variant="outlined" color="error" onClick={handleFundClickSELL}>Sell</Button>
                         </Stack>
                       ) : (
                         <Button variant="outlined" onClick={handleTradeButton}>Trade!</Button>
@@ -296,7 +341,7 @@ export default function stocks({}) {
         )
       }
       {
-        fundPortfolioInfo[0] != null && shwoFundPortfolio && (
+        fundPortfolioInfo[0] != null && showFundPortfolio && (
           <div className='p-10'>
             <h1 className='text-xl pb-2.5 font-medium'>Fund Portfolio</h1>
             <TableData fundPortfolioInfo={fundPortfolioInfo} setFundPortfolioInfo={setFundPortfolioInfo}/>
