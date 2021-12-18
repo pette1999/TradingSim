@@ -1,4 +1,23 @@
-# Next.js + Tailwind CSS Example
+# YOLO LIfe
+Yolo Life is a [Next.js](https://nextjs.org/) web application that allows the users to do stock simulation trading. Yolo Life, a place where you place YOLO trades with 0 risks!
+
+## Live site
+[YOLO LIFE](https://tradingsim.netlify.app/), hosted by [Netlify](https://www.netlify.com/), backended by [Supabase](https://supabase.com/)
+
+## Current problem
+- Currently user might not be able to add new accounts to the site due to some issues with Supabase SQL trigger
+- Login credentials if you want to try it before the login issue is resolved
+    - username: meiguo1969@gmail.com
+    - password: 123456
+
+## Reference
+- https://stackoverflow.com/questions/46586165/react-conditionally-render-based-on-viewport-size
+- https://github.com/AndreasFaust/react-ticker
+- https://dev-clone.nuxtjs.app/misha_wtf/907359
+- https://levelup.gitconnected.com/how-to-use-supabase-authentication-in-a-react-application-b23cd24e591b
+- https://www.digitalocean.com/community/tutorials/how-to-implement-smooth-scrolling-in-react
+
+## Next.js + Tailwind CSS Example
 
 This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
 
@@ -26,9 +45,4 @@ yarn create next-app --example with-tailwindcss with-tailwindcss-app
 
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
 
-## Reference
-- https://stackoverflow.com/questions/46586165/react-conditionally-render-based-on-viewport-size
-- https://github.com/AndreasFaust/react-ticker
-- https://dev-clone.nuxtjs.app/misha_wtf/907359
-- https://levelup.gitconnected.com/how-to-use-supabase-authentication-in-a-react-application-b23cd24e591b
-- https://www.digitalocean.com/community/tutorials/how-to-implement-smooth-scrolling-in-react
+
