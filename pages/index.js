@@ -6,7 +6,6 @@ import Login from "../components/Login"
 import { useAuth } from "../utils/auth"
 import stocks from '../pages/stocks'
 import { Switch, Route, Link} from 'react-router-dom'
-import { Router } from "@reach/router"
 
 
 export default function IndexPage() {
@@ -25,7 +24,7 @@ export default function IndexPage() {
   const fetchUser = async () => {
     let { data: users, error } = await supabase
     .from('user')
-    .select('UserName,Password,PortfolioID,Email')
+    .select('UserName,Password,PortfolioID,Email,Profile_pic')
 
     if(!error) {
       setUser(users)
@@ -60,12 +59,12 @@ export default function IndexPage() {
   const fetchFund = async () => {
     let { data: funds, error } = await supabase
     .from('fund')
-    .select('FundName')
+    .select('FundTicker')
 
     if(!error) {
       setFunds(funds)
       for (let i = 0; i < funds.length; i++) {
-        console.log(funds[i].FundName)
+        console.log(funds[i].FundTicker)
       }
     } else {
       // there is an error

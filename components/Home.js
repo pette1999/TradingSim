@@ -54,11 +54,6 @@ export default function Home({ user, supabase, users, stocks, funds}) {
   }
 
   useEffect(() => {
-    // addUser()
-    // fetchUser()
-    // fetchStock()
-    // fetchFund()
-
     if (window.innerWidth > 800) {
       setDesktop(true);
     } else {
@@ -75,13 +70,6 @@ export default function Home({ user, supabase, users, stocks, funds}) {
     window.addEventListener('resize', updateMedia);
     return () => window.removeEventListener('resize', updateMedia);
   }, [loading]);
-
-  const test = () => {
-    console.log("hello")
-    for (let i = 0; i < users.length; i++) {
-      console.log("email: " + users[i].Email)
-    }
-  }
 
   const addUser = async () => {
     var temp = 0
@@ -137,12 +125,11 @@ export default function Home({ user, supabase, users, stocks, funds}) {
       <div className="flex flex-col justify-between min-w-fit">
         <div className="bg-white text-black flex justify-between items-center h-12">
           <div className="bg-white text-black flex items-center h-10 w-full h-5 border-1 border-black rounded p-2.5">
-            <p className="p-5">YOLO Life</p>
+            <a href="/" className="p-5">YOLO Life</a>
           </div>
           <div className="flex flex-row space-x-4 justify-between p-8">
             <a href="/stocks" className="flex hover:font-bold">Stocks</a>
-            <a href="/" className="flex hover:font-bold">PortFolio</a>
-            <a href="/" className="flex hover:font-bold">Account</a>
+            <a href="/account" className="flex hover:font-bold">Account</a>
           </div>
         </div>
         <Ticker>
@@ -161,15 +148,6 @@ export default function Home({ user, supabase, users, stocks, funds}) {
               </Stack>
               <img src='https://wallpaper.dog/large/5574447.jpg' className=" object-cover w-3/5"/>
             </div>
-            <button
-              className="text-pink-300 font-semibold"
-              onClick={async () => {
-                const { error } = await supabase.auth.signOut()
-                if (error) console.log('Error logging out:', error.message)
-              }}
-            >
-              Logout
-            </button>
             <div className="px-20 pt-20 pb-40" id="tickers">
               <h1 className="text-5xl p-20 font-bold">Available tickers for the Game: </h1>
               <h2 className="text-4xl px-20 font-medium">Stocks: </h2>
@@ -178,7 +156,7 @@ export default function Home({ user, supabase, users, stocks, funds}) {
               </div>
               <h2 className="text-4xl px-20 font-medium">Funds: </h2>
               <div className="container mx-auto pl-20 pr-10 text-3xl pt-10 pb-20">
-                {funds.map(g => ' ' + g.FundName).toString()}
+                {funds.map(g => ' ' + g.FundTicker).toString()}
               </div>
               <span className="px-20">
                 <CustomButton variant="contained"><Link to="game" activeClass="active" spy={true} smooth={true} offset={-70} duration={500}>Continue</Link></CustomButton>
@@ -204,8 +182,6 @@ export default function Home({ user, supabase, users, stocks, funds}) {
               </Stack>
               <img src='https://banner2.cleanpng.com/20180212/rfw/kisspng-piggy-bank-illustration-pink-piggy-piggy-bank-5a823aca26ccb7.5680311315184841701589.jpg' className=" object-cover"/>
             </div>
-            <button onClick={test}>Hit Me</button>
-            <p>{addUser}</p>
           </span>
         )
       }
