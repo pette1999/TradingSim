@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack'
 import Button from '@mui/material/Button'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TableData from "../components/TableData"
+import Img from 'react-cloudinary-lazy-image'
 
 export default function account() {
   const [userInfo, setUserInfo] = useState ([])
@@ -114,7 +115,22 @@ export default function account() {
         {
           userInfo[0] != null && (
             <>
-            <img className="rounded-full object-cover" src={userInfo[0].Profile_pic} width="150" height="150" alt="profilepic"/>
+            <Img
+              cloudName={'petercloud'}
+              imageName={userInfo[0].Profile_pic}
+              fluid={{
+                maxWidth: 150,
+                maxheight: 150  
+              }}
+              style={{
+                width: '9.375em',
+                height: '9.375em',
+              }}
+              propTypes={{onload}}
+              urlParams="c_scale,h_150,r_150,q_100"
+              loading="lazy"
+              alt={'profilepic'}  
+            />
             <h1>Hi! {userInfo[0].UserName}</h1>
             <ThemeProvider theme={theme}>
               <Button variant="outlined" size="small" color="pink" onClick={handleOnClick}>Show Portfolio</Button>

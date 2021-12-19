@@ -15,7 +15,7 @@ export default function Header({ stocks, funds, term, stockInfo, fundInfo, setSt
   // const [fundInfoH, setFundInfo] = useState(fundInfo)
 
   let handleChange = (e) => {
-    setTerm(e.target.value)
+    setTerm(e.target.value.toUpperCase())
     temp_stock = 0
     temp_fund = 0
     stocks.map(g => {

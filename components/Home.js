@@ -8,6 +8,7 @@ import { Link, animateScroll as scroll } from "react-scroll";
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
+import Img from 'react-cloudinary-lazy-image'
 
 export default function Home({ user, supabase, users, stocks, funds}) {
   const [isDesktop, setDesktop] = useState(false);
@@ -146,7 +147,25 @@ export default function Home({ user, supabase, users, stocks, funds}) {
                 <h1>Hello, <span className="text-pink-300 text-4xl">{user.email.substring(0,user.email.indexOf('@'))}</span><br></br>Welcome to YOLO Life!<br></br>A place where<br></br> You place YOLO trades with 0 risks ;)</h1>
                 <CustomButton variant="contained"><Link to="tickers" activeClass="active" spy={true} smooth={true} offset={-70} duration={500}>Get Start</Link></CustomButton>
               </Stack>
-              <img src='https://wallpaper.dog/large/5574447.jpg' className=" object-cover w-3/5"/>
+              {/* <img src='https://wallpaper.dog/large/5574447.jpg' className=" object-cover w-3/5"/> */}
+              <div className=" object-cover w-3/5">
+                <Img
+                  cloudName={'petercloud'}
+                  imageName={'home1'}
+                  fluid={{
+                    maxWidth: 2048,
+                    maxheight: 2048  
+                  }}
+                  // style={{
+                  //   width: '9.375em',
+                  //   height: '9.375em',
+                  // }}
+                  propTypes={{onload}}
+                  urlParams="q_100"
+                  loading="lazy"
+                  alt={'profilepic'}  
+                />
+              </div>
             </div>
             <div className="px-20 pt-20 pb-40" id="tickers">
               <h1 className="text-5xl p-20 font-bold">Available tickers for the Game: </h1>
@@ -163,7 +182,7 @@ export default function Home({ user, supabase, users, stocks, funds}) {
               </span>
             </div>
             <div className="flex flex-row justify-between min-w-fit items-center">
-              <Stack className="px-20 pt-20 pb-40" spacing={2} direction="column" id="game">
+              <Stack className="pr-20 pt-20 pb-40" spacing={2} direction="column" id="game">
                 <h1 className="text-4xl p-20 font-bold">The Game</h1>
                 <Stack spacing={3} direction="column" className="pl-20">
                   <Stack spacing={2} direction="row">
@@ -180,7 +199,25 @@ export default function Home({ user, supabase, users, stocks, funds}) {
                   </Stack>
                 </Stack>
               </Stack>
-              <img src='https://banner2.cleanpng.com/20180212/rfw/kisspng-piggy-bank-illustration-pink-piggy-piggy-bank-5a823aca26ccb7.5680311315184841701589.jpg' className=" object-cover"/>
+              {/* <img src='https://banner2.cleanpng.com/20180212/rfw/kisspng-piggy-bank-illustration-pink-piggy-piggy-bank-5a823aca26ccb7.5680311315184841701589.jpg' className=" object-cover"/> */}
+              <div className=" object-cover w-3/5">
+                <Img
+                  cloudName={'petercloud'}
+                  imageName={'home2'}
+                  fluid={{
+                    maxWidth: 2048,
+                    maxheight: 2048  
+                  }}
+                  // style={{
+                  //   width: '9.375em',
+                  //   height: '9.375em',
+                  // }}
+                  propTypes={{onload}}
+                  urlParams="q_100"
+                  loading="lazy"
+                  alt={'profilepic'}  
+                />
+              </div>
             </div>
           </span>
         )
