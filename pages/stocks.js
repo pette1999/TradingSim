@@ -278,9 +278,9 @@ export default function stocks({}) {
                 stockInfo[0] != null && (
                   <>
                   <span>Ticker: {stockInfo[0].Ticker}</span>
-                  <span>Price: {stockInfo[0].Price}</span>
+                  <span>Price: ${stockInfo[0].Price}</span>
                   <span>Company Name: {stockInfo[0].Company_Name}</span>
-                  <span>Market Cap: {stockInfo[0].Market_Cap} Billion US$</span>
+                  <span>Market Cap: ${stockInfo[0].Market_Cap} Billions</span>
                   <span>Volumn: {stockInfo[0].Volume}</span>
                   {
                     showBuy ? (
@@ -299,7 +299,7 @@ export default function stocks({}) {
                 fundInfo[0] != null && (
                   <>
                   <span>Fund Ticker: {fundInfo[0].FundTicker}</span>
-                  <span>Price: {fundInfo[0].fund_price}</span>
+                  <span>Price: ${fundInfo[0].fund_price}</span>
                   <span>Fund Name: {fundInfo[0].FundName}</span>
                   <span>Fund Type: {fundInfo[0].FundType}</span>
                   <span>Fund Size: {fundInfo[0].FundSize}</span>

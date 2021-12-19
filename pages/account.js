@@ -10,9 +10,9 @@ import Img from 'react-cloudinary-lazy-image'
 export default function account() {
   const [userInfo, setUserInfo] = useState ([])
   const [userPortfolioInfo, setUserPortfolioInfo] = useState([])
-  const [filteredInfo, setFilteredInfo] = useState([])
   const [showPortfolio, setShowPortfolio] = useState(false)
   const [filter, setFilter] = useState(false)
+  const [countPortfolio, setCountPortfolio] = useState(0)
   const { user } = Auth.useUser()
   const theme = createTheme({
     status: {
@@ -38,6 +38,7 @@ export default function account() {
     user && fetchUser(user.email)
     setShowPortfolio(false)
     setFilter(false)
+    setCountPortfolio(0)
   }, []);
 
   const fetchUser = async (email) => {
@@ -72,16 +73,15 @@ export default function account() {
     }
   }
 
-  const fetchUserFilteredInfo = async (id) => {
-    let { data: filteredInfo, error } = await supabase
+  const fetchPortfolioCount = async (id) => {
+    let { data: countPortfolio, error } = await supabase
     .from('portfolio')
-    .select('Long_term_holding', { count: 'exact' })
+    .select('Ticker',{ Count: 'exact'})
     .eq('PortfolioID',id)
-    .and()
 
     if(!error) {
-      setUserPortfolioInfo(userPortfolioInfo)
-      console.log(userPortfolioInfo)
+      setCountPortfolio(countPortfolio.length)
+      console.log(countPortfolio.length)
     } else {
       // there is an error
       console.log(error)
@@ -92,6 +92,7 @@ export default function account() {
     setShowPortfolio(true)
     setFilter(false)
     userInfo[0] != null && fetchUserPortfolioInfo(userInfo[0].PortfolioID)
+    userInfo[0] != null && fetchPortfolioCount(userInfo[0].PortfolioID)
   }
 
   let handleFilter = () => {
@@ -144,6 +145,7 @@ export default function account() {
                 <div className='p-10'>
                   <div className="flex flex-row justify-between">
                     <h1 className='text-xl pb-2.5 font-medium'>Fund Portfolio</h1>
+                    <h1>{countPortfolio} Investments Total</h1>
                   </div>
                   <TableData fundPortfolioInfo={userPortfolioInfo} setFundPortfolioInfo={setUserPortfolioInfo}/>
                 </div>
