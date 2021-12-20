@@ -11,11 +11,13 @@ Yolo Life is a [Next.js](https://nextjs.org/) web application that allows the us
     - password: 123456
 
 ## Reference
-- https://stackoverflow.com/questions/46586165/react-conditionally-render-based-on-viewport-size
-- https://github.com/AndreasFaust/react-ticker
-- https://dev-clone.nuxtjs.app/misha_wtf/907359
-- https://levelup.gitconnected.com/how-to-use-supabase-authentication-in-a-react-application-b23cd24e591b
-- https://www.digitalocean.com/community/tutorials/how-to-implement-smooth-scrolling-in-react
+- [react-conditional-render](https://stackoverflow.com/questions/46586165/react-conditionally-render-based-on-viewport-size)
+- [react-ticker](https://github.com/AndreasFaust/react-ticker)
+- [User Authentication in Next.js with Supabase](https://dev-clone.nuxtjs.app/misha_wtf/907359)
+- [supabase-authentication](https://levelup.gitconnected.com/how-to-use-supabase-authentication-in-a-react-application-b23cd24e591b)
+- [Implement-smooth-scrolling](https://www.digitalocean.com/community/tutorials/how-to-implement-smooth-scrolling-in-react)
+- [React-cloudinary-and-lazy-loading](https://teacode.io/blog/how-to-speed-up-your-react-app-using-cloudinary-and-lazy-loading)
+- [React-stockcharts](https://github.com/rrag/react-stockcharts-examples2)
 
 ## Next.js + Tailwind CSS Example
 
