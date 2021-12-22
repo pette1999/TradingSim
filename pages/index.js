@@ -38,22 +38,16 @@ export default function IndexPage() {
   }
 
   const fetchStock = async () => {
-    var stockList = []
     let { data: stocks, error } = await supabase
     .from('stock')
     .select('Ticker')
 
     if(!error) {
       setStocks(stocks)
-      for (let i = 0; i < stocks.length; i++) {
-        stockList.push(stocks[i].Ticker)
-      }
     } else {
       // there is an error
       console.log(error)
     }
-
-    console.log(stockList)
   }
 
   const fetchFund = async () => {
@@ -63,9 +57,6 @@ export default function IndexPage() {
 
     if(!error) {
       setFunds(funds)
-      for (let i = 0; i < funds.length; i++) {
-        console.log(funds[i].FundTicker)
-      }
     } else {
       // there is an error
       console.log(error)

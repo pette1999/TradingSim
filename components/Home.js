@@ -55,6 +55,7 @@ export default function Home({ user, supabase, users, stocks, funds}) {
   }
 
   useEffect(() => {
+    // addUser()
     if (window.innerWidth > 800) {
       setDesktop(true);
     } else {
@@ -73,40 +74,33 @@ export default function Home({ user, supabase, users, stocks, funds}) {
   }, [loading]);
 
   const addUser = async () => {
-    var temp = 0
-    for (let i = 0; i < users.length; i++) {
-      if (user.email.toString().toLowerCase() == users[i].Email.toString().toLowerCase()) {
-        temp += 1
-        console.log("already in!")
-      }
-    }
-    if (temp == 0) {
-      let new_UserID = users.length+2
-      let new_UserName = user.email.substring(0,user.email.indexOf('@'))
-      let new_Passowrd = ""
-      let new_Portfolio = users.length+102
-      
-      const { data, error } = await supabase
-      .from('user')
-      .insert([
-        {
-          UserID: new_UserID,
-          UserName: new_UserName,
-          Password: new_Passowrd,
-          PortfolioID: new_Portfolio,
-          Email: user.email
-        },
-      ])
+    let new_UserID = users.length+1
+    let new_UserName = user.email.substring(0,user.email.indexOf('@'))
+    let new_Passowrd = ""
+    let new_Portfolio = users.length+101
+    let Profile_pic = "https://bit.ly/326o4el"
+    
+    const { data, error } = await supabase
+    .from('user')
+    .insert([
+      {
+        UserID: new_UserID,
+        UserName: new_UserName,
+        Password: new_Passowrd,
+        PortfolioID: new_Portfolio,
+        Email: user.email,
+        Profile_pic: Profile_pic
+      },
+    ])
 
-      if (error) {
-        console.log(error)
-        setError(error)
-        setLoading(false)
-      } else {
-        setUser([...users, {'UserID': new_UserID, 'UserName': new_UserName, 'Password':new_Passowrd, 'PortfolioID':new_Portfolio, 'Email':user.email}])
-        setLoading(false)
-        console.log("a new user just added!")
-      }
+    if (error) {
+      console.log(error)
+      setError(error)
+      setLoading(false)
+    } else {
+      setUser([...users, {'UserID': new_UserID, 'UserName': new_UserName, 'Password':new_Passowrd, 'PortfolioID':new_Portfolio, 'Email':user.email}])
+      setLoading(false)
+      console.log("a new user just added!")
     }
   }
 
