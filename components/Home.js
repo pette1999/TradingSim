@@ -157,11 +157,11 @@ export default function Home({ user, supabase, users, setUser, stocks, funds, us
       <div className="flex flex-col justify-between min-w-fit">
         <div className="bg-white text-black flex justify-between items-center h-12">
           <div className="bg-white text-black flex items-center h-10 w-ful border-1 border-black rounded p-2.5">
-            <a href="/" className="p-5">YOLO Life</a>
+            <button onClick={showEmails}><a href="/" className="p-5">YOLO Life</a></button>
           </div>
           <div className="flex flex-row space-x-4 justify-between p-8">
-            <a href="/stocks" className="flex hover:font-bold">Stocks</a>
-            <a href="/account" className="flex hover:font-bold">Account</a>
+            <button onClick={showEmails}><a href="/stocks" className="flex hover:font-bold">Stocks</a></button>
+            <button onClick={showEmails}><a href="/account" className="flex hover:font-bold">Account</a></button>
           </div>
         </div>
         {/* <Ticker>
