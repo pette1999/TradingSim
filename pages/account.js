@@ -49,9 +49,7 @@ export default function account() {
 
     if(!error) {
       setUserInfo(userInfo)
-      for (let i = 0; i < userInfo.length; i++) {
-        console.log(userInfo[i].Email)
-      }
+      console.log(userInfo[0].Profile_pic)
     } else {
       // there is an error
       console.log(error)

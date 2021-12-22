@@ -10,10 +10,9 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import Img from 'react-cloudinary-lazy-image'
 
-export default function Home({ user, supabase, users, stocks, funds}) {
+export default function Home({ user, supabase, users, setUser, stocks, funds, userEmails, setUserEmails}) {
   const [isDesktop, setDesktop] = useState(false);
   const [error, setError] = useState(null)
-  const [loading, setLoading] = useState (true)
 
   const CustomButtonRoot = styled('span')`
     background-color: #F8A8D4;
@@ -55,7 +54,6 @@ export default function Home({ user, supabase, users, stocks, funds}) {
   }
 
   useEffect(() => {
-    // addUser()
     if (window.innerWidth > 800) {
       setDesktop(true);
     } else {
@@ -71,9 +69,55 @@ export default function Home({ user, supabase, users, stocks, funds}) {
     };
     window.addEventListener('resize', updateMedia);
     return () => window.removeEventListener('resize', updateMedia);
-  }, [loading]);
+  },[]);
+
+  const showEmails = async () => {
+    if(userEmails.includes(user.email)) {
+      // email already in table
+      console.log('Email already in the database.')
+    } else {
+      // email not in table, it's a new created user
+      console.log("This is a new user")
+
+      let new_UserID = users.length+1
+      let new_UserName = user.email.substring(0,user.email.indexOf('@'))
+      let new_Passowrd = ""
+      let new_Portfolio = users.length+101
+      let Profile_pic = "https://bit.ly/326o4el"
+      
+      const { data, error } = await supabase
+      .from('user')
+      .insert([
+        {
+          UserID: new_UserID,
+          UserName: new_UserName,
+          Password: new_Passowrd,
+          PortfolioID: new_Portfolio,
+          Email: user.email,
+          Profile_pic: Profile_pic
+        },
+      ])
+
+      if (error) {
+        console.log(error)
+        setError(error)
+      } else {
+        setUser([...users, {'UserID': new_UserID, 'UserName': new_UserName, 'Password':new_Passowrd, 'PortfolioID':new_Portfolio, 'Email':user.email, 'Profile_pic':Profile_pic}])
+        console.log("a new user just added!")
+      }
+    }
+  }
 
   const addUser = async () => {
+    // check if the user email already in the users table
+    if(userEmails.includes(user.email)) {
+      // email already in table, skip adding the user process
+      console.log('Email already in the database.')
+    } else {
+      // email not in table, it's a new created user
+      console.log("This is a new user")
+    }
+
     let new_UserID = users.length+1
     let new_UserName = user.email.substring(0,user.email.indexOf('@'))
     let new_Passowrd = ""
@@ -96,18 +140,11 @@ export default function Home({ user, supabase, users, stocks, funds}) {
     if (error) {
       console.log(error)
       setError(error)
-      setLoading(false)
     } else {
-      setUser([...users, {'UserID': new_UserID, 'UserName': new_UserName, 'Password':new_Passowrd, 'PortfolioID':new_Portfolio, 'Email':user.email}])
-      setLoading(false)
+      setUser([...users, {'UserID': new_UserID, 'UserName': new_UserName, 'Password':new_Passowrd, 'PortfolioID':new_Portfolio, 'Email':user.email, 'Profile_pic':Profile_pic}])
       console.log("a new user just added!")
     }
   }
-
-  // /* Application is still fetching data */
-  // if (loading) {
-  //   return <p>Loading...</p>
-  // }
 
   /* Something went wrong while fetching data */
   if (error) {
@@ -119,7 +156,7 @@ export default function Home({ user, supabase, users, stocks, funds}) {
     <div className="min-h-screen max-h-full min-w-screen">
       <div className="flex flex-col justify-between min-w-fit">
         <div className="bg-white text-black flex justify-between items-center h-12">
-          <div className="bg-white text-black flex items-center h-10 w-full h-5 border-1 border-black rounded p-2.5">
+          <div className="bg-white text-black flex items-center h-10 w-ful border-1 border-black rounded p-2.5">
             <a href="/" className="p-5">YOLO Life</a>
           </div>
           <div className="flex flex-row space-x-4 justify-between p-8">
@@ -139,7 +176,7 @@ export default function Home({ user, supabase, users, stocks, funds}) {
             <div className="flex flex-row justify-between min-w-fit">
               <Stack className="text-black font-black text-2xl p-8 self-center" spacing={2} direction="column">
                 <h1>Hello, <span className="text-pink-300 text-4xl">{user.email.substring(0,user.email.indexOf('@'))}</span><br></br>Welcome to YOLO Life!<br></br>A place where<br></br> You place YOLO trades with 0 risks ;)</h1>
-                <CustomButton variant="contained"><Link to="tickers" activeClass="active" spy={true} smooth={true} offset={-70} duration={500}>Get Start</Link></CustomButton>
+                <CustomButton variant="contained" onClick={showEmails}><Link to="tickers" activeClass="active" spy={true} smooth={true} offset={-70} duration={500}>Get Start</Link></CustomButton>
               </Stack>
               {/* <img src='https://wallpaper.dog/large/5574447.jpg' className=" object-cover w-3/5"/> */}
               <div className=" object-cover w-3/5">
@@ -165,11 +202,11 @@ export default function Home({ user, supabase, users, stocks, funds}) {
               <h1 className="text-5xl p-20 font-bold">Available tickers for the Game: </h1>
               <h2 className="text-4xl px-20 font-medium">Stocks: </h2>
               <div className="container mx-auto pl-20 pr-10 text-3xl pt-10 pb-10">
-                {stocks.map(g => ' ' + g.Ticker).toString()}
+                {stocks?.map(g => ' ' + g.Ticker).toString()}
               </div>
               <h2 className="text-4xl px-20 font-medium">Funds: </h2>
               <div className="container mx-auto pl-20 pr-10 text-3xl pt-10 pb-20">
-                {funds.map(g => ' ' + g.FundTicker).toString()}
+                {funds?.map(g => ' ' + g.FundTicker).toString()}
               </div>
               <span className="px-20">
                 <CustomButton variant="contained"><Link to="game" activeClass="active" spy={true} smooth={true} offset={-70} duration={500}>Continue</Link></CustomButton>

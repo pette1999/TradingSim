@@ -12,6 +12,7 @@ export default function IndexPage() {
   const { user } = Auth.useUser()
   // const { user, view, signOut } = useAuth();
   const [users, setUser] = useState ([])
+  const [userEmails, setUserEmails] = useState ([])
   const [stocks, setStocks] = useState([])
   const [funds, setFunds] = useState([])
 
@@ -22,15 +23,18 @@ export default function IndexPage() {
   }, []);
 
   const fetchUser = async () => {
+    var emails = []
     let { data: users, error } = await supabase
     .from('user')
-    .select('UserName,Password,PortfolioID,Email,Profile_pic')
+    .select('*')
 
     if(!error) {
       setUser(users)
       for (let i = 0; i < users.length; i++) {
-        console.log(users[i].Email)
+        emails.push(users[i].Email)
       }
+      setUserEmails(emails)
+      console.log(emails)
     } else {
       // there is an error
       console.log(error)
@@ -44,6 +48,7 @@ export default function IndexPage() {
 
     if(!error) {
       setStocks(stocks)
+      console.log(stocks)
     } else {
       // there is an error
       console.log(error)
@@ -67,7 +72,7 @@ export default function IndexPage() {
       <div>
           {
             user ? (
-              <Home user={user} supabase={supabase} users={users} stocks={stocks} funds={funds} path="/"/>
+              <Home user={user} supabase={supabase} users={users} setUser={setUser} stocks={stocks} funds={funds} userEmails={userEmails} setUserEmails={setUserEmails} path="/"/>
             ) : (
               <Login supabase={supabase} Auth={Auth} user={user} path="/"/>
             )

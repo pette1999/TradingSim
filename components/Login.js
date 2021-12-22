@@ -3,7 +3,6 @@ import Header from "../components/Header";
 
 export default function Login({ supabase, Auth, user}) {
   const [isDesktop, setDesktop] = useState(false);
-  const [users, setUser] = useState ([])
 
   useEffect(() => {
     if (window.innerWidth > 800) {
