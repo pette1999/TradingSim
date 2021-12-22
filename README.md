@@ -4,12 +4,6 @@ Yolo Life is a [Next.js](https://nextjs.org/) web application that allows the us
 ## Live site
 [YOLO LIFE](https://tradingsim.netlify.app/), hosted by [Netlify](https://www.netlify.com/), backended by [Supabase](https://supabase.com/)
 
-## Current problem
-- Currently user might not be able to add new accounts to the site due to some issues with Supabase SQL trigger
-- Login credentials if you want to try it before the login issue is resolved
-    - username: meiguo1969@gmail.com
-    - password: 123456
-
 ## Reference
 - [react-conditional-render](https://stackoverflow.com/questions/46586165/react-conditionally-render-based-on-viewport-size)
 - [react-ticker](https://github.com/AndreasFaust/react-ticker)
