@@ -114,22 +114,26 @@ export default function account() {
         {
           userInfo[0] != null && (
             <>
-            <Img
-              cloudName={'petercloud'}
-              imageName={userInfo[0].Profile_pic}
-              fluid={{
-                maxWidth: 150,
-                maxheight: 150  
-              }}
-              style={{
-                width: '9.375em',
-                height: '9.375em',
-              }}
-              propTypes={{onload}}
-              urlParams="c_scale,h_150,r_150,q_100"
-              loading="lazy"
-              alt={'profilepic'}  
-            />
+            <div className="relative w-36 h-36">
+              <Img
+                cloudName={'petercloud'}
+                imageName={userInfo[0].Profile_pic}
+                fluid={{
+                  maxWidth: 150,
+                  maxheight: 150  
+                }}
+                style={{
+                  width: '9.375em',
+                  height: '9.375em',
+                }}
+                propTypes={{onload}}
+                urlParams="c_scale,h_150,r_150,q_100"
+                loading="lazy"
+                alt={'profilepic'}  
+              />
+              <div className="absolute w-full h-full ease-in duration-300 hover:bg-black-rgba"></div>
+              <div class="button"><a> BUTTON </a></div>
+            </div>
             <h1>Hi! {userInfo[0].UserName}</h1>
             <ThemeProvider theme={theme}>
               <Button variant="outlined" size="small" color="pink" onClick={handleOnClick}>Show Portfolio</Button>

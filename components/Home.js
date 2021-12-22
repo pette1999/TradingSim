@@ -83,7 +83,7 @@ export default function Home({ user, supabase, users, setUser, stocks, funds, us
       let new_UserName = user.email.substring(0,user.email.indexOf('@'))
       let new_Passowrd = ""
       let new_Portfolio = users.length+101
-      let Profile_pic = "https://bit.ly/326o4el"
+      let Profile_pic = String("profile" + (getRandomInt(20)+1))
       
       const { data, error } = await supabase
       .from('user')
