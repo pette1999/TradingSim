@@ -53,7 +53,15 @@ export default function Home({ user, supabase, users, setUser, stocks, funds, us
     return <ButtonUnstyled {...props} component={CustomButtonRoot} />;
   }
 
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
   useEffect(() => {
+    if (userEmails.length > 0) {
+      showEmails()
+      console.log("ADDED A NEW EMAIL!")
+    }
     if (window.innerWidth > 800) {
       setDesktop(true);
     } else {
